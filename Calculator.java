@@ -1,312 +1,352 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.LayoutManager;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class Calculator implements ActionListener {
-    Boolean isOparetoclicked = false;
-    JFrame jf = new JFrame("calculator");
-    JLabel DisplayLabel;
-    JButton sevenbutton;
-    JButton eightbutton;
-    JButton ninebutton;
-    JButton plusbutton;
-    JButton fourbutton;
-    JButton fivebutton;
-    JButton sixbutton;
-    JButton minbutton;
-    JButton onebutton;
-    JButton twobutton;
-    JButton threebutton;
-    JButton mulbutton;
-    JButton dotbutton;
-    JButton zerobutton;
-    JButton equelbutton;
-    JButton subbutton;
-    JButton clearbutton;
-    double newValue;
+    boolean isOperatorClicked = false;
+    JFrame jf;
+    JLabel historyLabel;   // History label
+    JLabel displayLabel;
     double oldValue;
     int calculation;
+    boolean isNewCalculation = true;
+    boolean isInverse = false; // To track inverse mode
+    boolean isPythagMode = false; // To track Pythagorean mode
+    double sideA = 0; // To store side a
+    JButton invButton; // Reference to the inverse button
+    JButton[] trigButtons; // Array to store references to trig buttons
+    String[] trigLabels = { "sin", "cos", "tan", "csc", "sec", "cot" }; // Base trig labels
 
     public Calculator() {
-        this.jf.setBounds(0, 0, 500, 550);
-        this.jf.setLayout((LayoutManager)null);
-        this.jf.getContentPane().setBackground(Color.BLACK);
-        this.DisplayLabel = new JLabel();
-        this.DisplayLabel.setBounds(20, 30, 440, 90);
-        this.DisplayLabel.setBackground(Color.white);
-        this.DisplayLabel.setOpaque(true);
-        this.DisplayLabel.setHorizontalAlignment(4);
-        this.DisplayLabel.setForeground(Color.BLACK);
-        this.DisplayLabel.setFont(new Font("arial", 0, 30));
-        this.DisplayLabel.setVisible(true);
-        this.jf.add(this.DisplayLabel);
-        this.sevenbutton = new JButton("7");
-        this.sevenbutton.setBounds(20, 150, 70, 70);
-        this.sevenbutton.setFont(new Font("arial", 0, 20));
-        this.sevenbutton.addActionListener(this);
-        this.sevenbutton.setBackground(Color.white);
-        this.sevenbutton.setOpaque(true);
-        this.jf.add(this.sevenbutton);
-        this.eightbutton = new JButton("8");
-        this.eightbutton.setBounds(110, 150, 70, 70);
-        this.eightbutton.setFont(new Font("arial", 0, 20));
-        this.eightbutton.addActionListener(this);
-        this.eightbutton.setBackground(Color.white);
-        this.eightbutton.setOpaque(true);
-        this.jf.add(this.eightbutton);
-        this.ninebutton = new JButton("9");
-        this.ninebutton.setBounds(200, 150, 70, 70);
-        this.ninebutton.setFont(new Font("arial", 0, 20));
-        this.ninebutton.addActionListener(this);
-        this.ninebutton.setBackground(Color.white);
-        this.ninebutton.setOpaque(true);
-        this.jf.add(this.ninebutton);
-        this.plusbutton = new JButton("+");
-        this.plusbutton.setBounds(290, 150, 75, 70);
-        this.plusbutton.setFont(new Font("arial", 0, 30));
-        this.plusbutton.addActionListener(this);
-        this.plusbutton.setBackground(Color.YELLOW);
-        this.plusbutton.setOpaque(true);
-        this.jf.add(this.plusbutton);
-        this.minbutton = new JButton("-");
-        this.minbutton.setBounds(385, 150, 75, 70);
-        this.minbutton.setFont(new Font("arial", 0, 35));
-        this.minbutton.addActionListener(this);
-        this.minbutton.setBackground(Color.YELLOW);
-        this.minbutton.setOpaque(true);
-        this.jf.add(this.minbutton);
-        this.fourbutton = new JButton("4");
-        this.fourbutton.setBounds(20, 240, 70, 70);
-        this.fourbutton.setFont(new Font("arial", 0, 20));
-        this.fourbutton.addActionListener(this);
-        this.fourbutton.setBackground(Color.white);
-        this.fourbutton.setOpaque(true);
-        this.jf.add(this.fourbutton);
-        this.fivebutton = new JButton("5");
-        this.fivebutton.setBounds(110, 240, 70, 70);
-        this.fivebutton.setFont(new Font("arial", 0, 20));
-        this.fivebutton.addActionListener(this);
-        this.fivebutton.setBackground(Color.white);
-        this.fivebutton.setOpaque(true);
-        this.jf.add(this.fivebutton);
-        this.sixbutton = new JButton("6");
-        this.sixbutton.setBounds(200, 240, 70, 70);
-        this.sixbutton.setFont(new Font("arial", 0, 20));
-        this.sixbutton.addActionListener(this);
-        this.sixbutton.setBackground(Color.white);
-        this.sixbutton.setOpaque(true);
-        this.jf.add(this.sixbutton);
-        this.mulbutton = new JButton("x");
-        this.mulbutton.setBounds(290, 240, 170, 70);
-        this.mulbutton.setFont(new Font("arial", 0, 30));
-        this.mulbutton.addActionListener(this);
-        this.mulbutton.setBackground(Color.YELLOW);
-        this.mulbutton.setOpaque(true);
-        this.jf.add(this.mulbutton);
-        this.onebutton = new JButton("1");
-        this.onebutton.setBounds(20, 330, 70, 70);
-        this.onebutton.setFont(new Font("arial", 0, 20));
-        this.onebutton.addActionListener(this);
-        this.onebutton.setBackground(Color.white);
-        this.onebutton.setOpaque(true);
-        this.jf.add(this.onebutton);
-        this.twobutton = new JButton("2");
-        this.twobutton.setBounds(110, 330, 70, 70);
-        this.twobutton.setFont(new Font("arial", 0, 20));
-        this.twobutton.addActionListener(this);
-        this.twobutton.setBackground(Color.white);
-        this.twobutton.setOpaque(true);
-        this.jf.add(this.twobutton);
-        this.threebutton = new JButton("3");
-        this.threebutton.setBounds(200, 330, 70, 70);
-        this.threebutton.setFont(new Font("arial", 0, 20));
-        this.threebutton.addActionListener(this);
-        this.threebutton.setBackground(Color.white);
-        this.threebutton.setOpaque(true);
-        this.jf.add(this.threebutton);
-        this.subbutton = new JButton("/");
-        this.subbutton.setBounds(290, 330, 170, 70);
-        this.subbutton.setFont(new Font("arial", 0, 30));
-        this.subbutton.addActionListener(this);
-        this.subbutton.setBackground(Color.YELLOW);
-        this.subbutton.setOpaque(true);
-        this.jf.add(this.subbutton);
-        this.dotbutton = new JButton(".");
-        this.dotbutton.setBounds(20, 420, 70, 70);
-        this.dotbutton.setFont(new Font("arial", 0, 50));
-        this.dotbutton.addActionListener(this);
-        this.dotbutton.setBackground(Color.white);
-        this.dotbutton.setOpaque(true);
-        this.jf.add(this.dotbutton);
-        this.zerobutton = new JButton("0");
-        this.zerobutton.setBounds(110, 420, 70, 70);
-        this.zerobutton.setFont(new Font("arial", 0, 30));
-        this.zerobutton.addActionListener(this);
-        this.zerobutton.setBackground(Color.white);
-        this.zerobutton.setOpaque(true);
-        this.jf.add(this.zerobutton);
-        this.equelbutton = new JButton("=");
-        this.equelbutton.setBounds(200, 420, 70, 70);
-        this.equelbutton.setFont(new Font("arial", 0, 30));
-        this.equelbutton.addActionListener(this);
-        this.equelbutton.setBackground(Color.WHITE);
-        this.equelbutton.setOpaque(true);
-        this.jf.add(this.equelbutton);
-        this.clearbutton = new JButton("Clear");
-        this.clearbutton.setBounds(290, 420, 170, 70);
-        this.clearbutton.setFont(new Font("sans-serif", 0, 25));
-        this.clearbutton.addActionListener(this);
-        this.clearbutton.setBackground(Color.RED);
-        this.clearbutton.setOpaque(true);
-        this.jf.add(this.clearbutton);
-        this.jf.setVisible(true);
-        this.jf.setDefaultCloseOperation(3);
+        try {
+            // Set the system's look and feel for a modern appearance
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            // Enable anti-aliasing for smoother graphics and text
+            System.setProperty("awt.useSystemAAFontSettings", "on");
+            System.setProperty("swing.aatext", "true");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        jf = new JFrame("Calculator");
+        jf.setSize(350, 670); // Adjusted window size
+        jf.setLayout(null);
+        jf.getContentPane().setBackground(Color.BLACK);
+
+        // History Label
+        historyLabel = new JLabel("");
+        historyLabel.setBounds(10, 30, 330, 30); // Position above the main display
+        historyLabel.setBackground(Color.BLACK);
+        historyLabel.setOpaque(true);
+        historyLabel.setHorizontalAlignment(JLabel.RIGHT);
+        historyLabel.setForeground(Color.GRAY);
+        historyLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 18));
+        jf.add(historyLabel);
+
+        // Display Label
+        displayLabel = new JLabel("0");
+        displayLabel.setBounds(10, 60, 330, 60); // Adjusted position
+        displayLabel.setBackground(Color.BLACK);
+        displayLabel.setOpaque(true);
+        displayLabel.setHorizontalAlignment(JLabel.RIGHT);
+        displayLabel.setForeground(Color.WHITE);
+        displayLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 40));
+        jf.add(displayLabel);
+
+        // Trigonometric Buttons Panel
+        JPanel trigPanel = new JPanel();
+        trigPanel.setLayout(new GridLayout(2, 4, 5, 5)); // 2 rows, 4 columns
+        trigPanel.setBounds(10, 130, 330, 90); // Adjusted position
+        trigPanel.setBackground(Color.BLACK);
+
+        String[] trigButtonLabels = { "sin", "cos", "tan", "csc", "sec", "cot", "Pythag", "Inv" };
+        trigButtons = new JButton[trigLabels.length]; // Initialize trig buttons array
+        for (int i = 0; i < trigButtonLabels.length; i++) {
+            JButton button = createButton(trigButtonLabels[i], Color.DARK_GRAY, Color.WHITE);
+            button.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+            button.addActionListener(this);
+            trigPanel.add(button);
+            if (trigButtonLabels[i].equals("Inv")) {
+                invButton = button; // Save reference to the inverse button
+            } else if (trigButtonLabels[i].equals("Pythag")) {
+                // Do nothing
+            } else {
+                // Save references to trig buttons (excluding "Pythag" and "Inv")
+                trigButtons[i] = button;
+            }
+        }
+        jf.add(trigPanel);
+
+        // Buttons Panel (Main Calculator Buttons)
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(5, 4, 5, 5));
+        buttonPanel.setBounds(10, 230, 330, 400); // Adjusted position and size
+        buttonPanel.setBackground(Color.BLACK);
+
+        // Button Labels
+        String[] buttonLabels = {
+                "AC", "+/-", "%", "÷",
+                "7", "8", "9", "×",
+                "4", "5", "6", "-",
+                "1", "2", "3", "+",
+                "", "0", ".", "=" // Empty string to align "0" under "2"
+        };
+
+        for (String label : buttonLabels) {
+            JButton button;
+            if (label.equals("")) {
+                button = new JButton();
+                button.setEnabled(false);
+                button.setVisible(false);
+                buttonPanel.add(button);
+            } else {
+                Color bgColor;
+                Color fgColor = Color.WHITE;
+                if (label.matches("[÷×\\-+=]")) {
+                    bgColor = new Color(255, 159, 10); // Orange for operators
+                } else if (label.equals("AC") || label.equals("+/-") || label.equals("%")) {
+                    bgColor = Color.DARK_GRAY; // Dark gray for function buttons
+                } else {
+                    bgColor = new Color(51, 51, 51); // Medium gray for numbers
+                }
+                button = createButton(label, bgColor, fgColor);
+                button.setFont(new Font("Helvetica Neue", Font.PLAIN, 30));
+                button.addActionListener(this);
+                buttonPanel.add(button);
+            }
+        }
+        jf.add(buttonPanel);
+
+        jf.setVisible(true);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public static void main(String[] var0) {
+    // Helper method to create buttons with rounded corners
+    private JButton createButton(String text, Color bgColor, Color fgColor) {
+        JButton button = new JButton(text);
+        button.setBackground(bgColor);
+        button.setForeground(fgColor);
+        button.setOpaque(false);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
+        button.setUI(new RoundedButtonUI());
+        return button;
+    }
+
+    public static void main(String[] args) {
         new Calculator();
     }
 
-    public void actionPerformed(ActionEvent var1) {
-        Object var2 = var1.getSource();
-        if (var2 == this.sevenbutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("7");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "7");
-            }
-        } else if (var2 == this.eightbutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("8");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "8");
-            }
-        } else if (var2 == this.ninebutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("9");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "9");
-            }
-        } else if (var2 == this.fourbutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("4");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "4");
-            }
-        } else if (var2 == this.fivebutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("5");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "5");
-            }
-        } else if (var2 == this.sixbutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("6");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "6");
-            }
-        } else if (var2 == this.onebutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("1");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "1");
-            }
-        } else if (var2 == this.twobutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("2");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "2");
-            }
-        } else if (var2 == this.threebutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("3");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "3");
-            }
-        } else if (var2 == this.zerobutton) {
-            if (this.isOparetoclicked) {
-                this.DisplayLabel.setText("0");
-                this.isOparetoclicked = false;
-            } else {
-                this.DisplayLabel.setText(this.DisplayLabel.getText() + "0");
-            }
-        } else if (var2 == this.dotbutton) {
-            this.DisplayLabel.setText(this.DisplayLabel.getText() + ".");
-        } else if (var2 == this.plusbutton) {
-            this.isOparetoclicked = true;
-            this.oldValue = Double.parseDouble(this.DisplayLabel.getText());
-            this.calculation = 1;
-        } else if (var2 == this.minbutton) {
-            this.isOparetoclicked = true;
-            this.oldValue = Double.parseDouble(this.DisplayLabel.getText());
-            this.calculation = 2;
-        } else if (var2 == this.mulbutton) {
-            this.isOparetoclicked = true;
-            this.oldValue = Double.parseDouble(this.DisplayLabel.getText());
-            this.calculation = 3;
-        } else if (var2 == this.subbutton) {
-            this.isOparetoclicked = true;
-            this.oldValue = Double.parseDouble(this.DisplayLabel.getText());
-            this.calculation = 4;
-        } else if (var2 == this.clearbutton) {
-            this.DisplayLabel.setText("");
-        } else if (var2 == this.equelbutton) {
-            switch (this.calculation) {
-                case 1:
-                    this.newValue = this.oldValue + Double.parseDouble(this.DisplayLabel.getText());
-                    if (Double.toString(this.newValue).endsWith(".0")) {
-                        this.DisplayLabel.setText(Double.toString(this.newValue).replace(".0", ""));
-                    } else {
-                        this.DisplayLabel.setText(Double.toString(this.newValue));
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        try {
+            if (command.matches("\\d")) {
+                appendNumberToDisplay(command);
+            } else if (command.equals(".")) {
+                if (!displayLabel.getText().contains(".")) {
+                    displayLabel.setText(displayLabel.getText() + ".");
+                }
+            } else if (command.equals("+/-")) {
+                double value = Double.parseDouble(displayLabel.getText());
+                value *= -1;
+                displayLabel.setText(formatResult(value));
+            } else if (command.equals("+") || command.equals("-") || command.equals("×") || command.equals("÷")) {
+                isOperatorClicked = true;
+                oldValue = Double.parseDouble(displayLabel.getText());
+                calculation = command.charAt(0); // Save operator as int
+                isNewCalculation = false;
+                historyLabel.setText(formatHistory(oldValue, command));
+            } else if (command.equals("=")) {
+                double newValue = Double.parseDouble(displayLabel.getText());
+                double result = 0;
+                if (isPythagMode) {
+                    // Calculate hypotenuse
+                    double sideB = newValue;
+                    result = Math.sqrt(sideA * sideA + sideB * sideB);
+                    historyLabel.setText("√(" + formatResult(sideA) + "² + " + formatResult(sideB) + "²)");
+                    displayLabel.setText(formatResult(result));
+                    isPythagMode = false;
+                    isNewCalculation = true;
+                } else {
+                    String operator = String.valueOf((char) calculation);
+                    historyLabel.setText(formatHistory(oldValue, operator, newValue));
+                    switch (calculation) {
+                        case '+': result = oldValue + newValue; break;
+                        case '-': result = oldValue - newValue; break;
+                        case '×': result = oldValue * newValue; break;
+                        case '÷':
+                            if (newValue == 0) {
+                                displayLabel.setText("Error");
+                                isNewCalculation = true;
+                                return;
+                            }
+                            result = oldValue / newValue;
+                            break;
                     }
-                    break;
-                case 2:
-                    this.newValue = this.oldValue - Double.parseDouble(this.DisplayLabel.getText());
-                    if (Double.toString(this.newValue).endsWith(".0")) {
-                        this.DisplayLabel.setText(Double.toString(this.newValue).replace(".0", ""));
-                    } else {
-                        this.DisplayLabel.setText(Double.toString(this.newValue));
+                    displayLabel.setText(formatResult(result));
+                    isNewCalculation = true;
+                }
+            } else if (command.equals("AC")) {
+                displayLabel.setText("0");
+                historyLabel.setText("");
+                oldValue = 0;
+                calculation = 0;
+                isOperatorClicked = false;
+                isNewCalculation = true;
+                isInverse = false;
+                isPythagMode = false;
+                updateInvButton(); // Reset inverse button appearance
+            } else if (command.equals("Inv")) {
+                isInverse = !isInverse;
+                updateInvButton();
+                updateTrigButtonLabels();
+            } else if (command.equals("%")) {
+                double value = Double.parseDouble(displayLabel.getText());
+                value /= 100;
+                displayLabel.setText(formatResult(value));
+            } else if (command.equals("sin") || command.equals("cos") || command.equals("tan") ||
+                    command.equals("csc") || command.equals("sec") || command.equals("cot") ||
+                    command.equals("sin⁻¹") || command.equals("cos⁻¹") || command.equals("tan⁻¹") ||
+                    command.equals("csc⁻¹") || command.equals("sec⁻¹") || command.equals("cot⁻¹")) {
+                String baseCommand = command.replace("⁻¹", "");
+                double value = Double.parseDouble(displayLabel.getText());
+                double result = 0;
+                String functionDisplay = command + "(" + value + ")";
+                historyLabel.setText(functionDisplay);
+                if (!command.contains("⁻¹")) {
+                    // Regular trigonometric functions
+                    double radians = Math.toRadians(value);
+                    switch (baseCommand) {
+                        case "sin": result = Math.sin(radians); break;
+                        case "cos": result = Math.cos(radians); break;
+                        case "tan": result = Math.tan(radians); break;
+                        case "csc": result = 1 / Math.sin(radians); break;
+                        case "sec": result = 1 / Math.cos(radians); break;
+                        case "cot": result = 1 / Math.tan(radians); break;
                     }
-                    break;
-                case 3:
-                    this.newValue = this.oldValue * Double.parseDouble(this.DisplayLabel.getText());
-                    if (Double.toString(this.newValue).endsWith(".0")) {
-                        this.DisplayLabel.setText(Double.toString(this.newValue).replace(".0", ""));
-                    } else {
-                        this.DisplayLabel.setText(Double.toString(this.newValue));
+                } else {
+                    // Inverse trigonometric functions
+                    if (baseCommand.equals("csc") || baseCommand.equals("sec") || baseCommand.equals("cot")) {
+                        if (value == 0) {
+                            displayLabel.setText("Error");
+                            isNewCalculation = true;
+                            return;
+                        }
+                    } else if (value < -1 || value > 1) {
+                        displayLabel.setText("Error");
+                        isNewCalculation = true;
+                        return;
                     }
-                    break;
-                case 4:
-                    this.newValue = this.oldValue / Double.parseDouble(this.DisplayLabel.getText());
-                    if (Double.toString(this.newValue).endsWith(".0")) {
-                        this.DisplayLabel.setText(Double.toString(this.newValue).replace(".0", ""));
-                    } else {
-                        this.DisplayLabel.setText(Double.toString(this.newValue));
+                    switch (baseCommand) {
+                        case "sin": result = Math.toDegrees(Math.asin(value)); break;
+                        case "cos": result = Math.toDegrees(Math.acos(value)); break;
+                        case "tan": result = Math.toDegrees(Math.atan(value)); break;
+                        case "csc": result = Math.toDegrees(Math.asin(1 / value)); break;
+                        case "sec": result = Math.toDegrees(Math.acos(1 / value)); break;
+                        case "cot": result = Math.toDegrees(Math.atan(1 / value)); break;
                     }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unexpected value: " + this.calculation);
+                }
+                if (Double.isNaN(result) || Double.isInfinite(result)) {
+                    displayLabel.setText("Error");
+                } else {
+                    displayLabel.setText(formatResult(result));
+                }
+                isNewCalculation = true;
+            } else if (command.equals("Pythag")) {
+                // Start Pythagorean mode
+                sideA = Double.parseDouble(displayLabel.getText());
+                isPythagMode = true;
+                historyLabel.setText("a = " + formatResult(sideA) + ", enter b and press =");
+                isNewCalculation = true;
+            }
+        } catch (NumberFormatException ex) {
+            displayLabel.setText("Error");
+            isNewCalculation = true;
+        } catch (Exception ex) {
+            displayLabel.setText("Error");
+            isNewCalculation = true;
+        }
+    }
+
+    private void appendNumberToDisplay(String number) {
+        if (isNewCalculation || displayLabel.getText().equals("0") || isOperatorClicked) {
+            displayLabel.setText(number);
+            isOperatorClicked = false;
+            isNewCalculation = false;
+        } else {
+            displayLabel.setText(displayLabel.getText() + number);
+        }
+    }
+
+    private String formatResult(double result) {
+        if (result == (long) result) {
+            return String.valueOf((long) result);
+        } else {
+            return String.format("%.8f", result).replaceAll("0+$", "").replaceAll("\\.$", "");
+        }
+    }
+
+    private void updateInvButton() {
+        if (isInverse) {
+            invButton.setBackground(Color.WHITE);
+            invButton.setForeground(Color.BLACK);
+        } else {
+            invButton.setBackground(Color.DARK_GRAY);
+            invButton.setForeground(Color.WHITE);
+        }
+        invButton.repaint();
+    }
+
+    private void updateTrigButtonLabels() {
+        for (int i = 0; i < trigLabels.length; i++) {
+            if (trigButtons[i] != null) {
+                if (isInverse) {
+                    trigButtons[i].setText(trigLabels[i] + "⁻¹");
+                } else {
+                    trigButtons[i].setText(trigLabels[i]);
+                }
             }
         }
+    }
 
+    private String formatHistory(double oldVal, String operator) {
+        return formatResult(oldVal) + " " + operator;
+    }
+
+    private String formatHistory(double oldVal, String operator, double newVal) {
+        return formatResult(oldVal) + " " + operator + " " + formatResult(newVal);
+    }
+
+    // Custom UI for rounded buttons
+    class RoundedButtonUI extends javax.swing.plaf.basic.BasicButtonUI {
+        @Override
+        public void installUI(JComponent c) {
+            super.installUI(c);
+            AbstractButton button = (AbstractButton) c;
+            button.setOpaque(false);
+            button.setBorder(new EmptyBorder(5, 15, 5, 15));
+        }
+
+        @Override
+        public void paint(Graphics g, JComponent c) {
+            AbstractButton b = (AbstractButton) c;
+            paintBackground(g, b, b.getModel().isPressed() ? 2 : 0);
+            super.paint(g, c);
+        }
+
+        private void paintBackground(Graphics g, JComponent c, int yOffset) {
+            Dimension size = c.getSize();
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            g.setColor(c.getBackground());
+            // Increase the arc width and height to make buttons more circular
+            g.fillRoundRect(0, yOffset, size.width, size.height - yOffset, size.height, size.height);
+        }
     }
 }
